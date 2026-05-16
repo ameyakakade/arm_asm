@@ -9,11 +9,28 @@ _start:
 loop:
     // current char will be present in W0
     LDRB W0, [X1], #1 // loading char and increment x1
+    CMP W0, #0
+    B.EQ jump // go to jump if null
+    CMP W0, 'a'
+    B.LT cs
+    CMP W0, 'z'
+    B.GT cs
+    // if you reach here it is def a lowercase to go jump
+    B jump
+
+cs:
+    // it is not lowercase check if it is capital
+    // we reach this only when we know it is not lowercase.
+    // because if it is we just skip checking for caps
     CMP W0, 'A'
-    B.GE jump
+    B.LT replace
     CMP W0, 'Z'
-    B.LE jump
-    // if it satisfies all the conditions it is not a alphabetic char so replace it with spaces
+    B.GT replace
+    
+    // if it reaches here we know it is a capital so go to jump
+    B jump
+
+replace:
     MOV W0, #0x20
 
 jump:   
@@ -36,5 +53,7 @@ jump:
     SVC #0x80
     
     .data
-str: .asciz "$*#)()\n"
+str: .asciz "This asm program uses a lot of branches, and is probably slow. It takes a string and converts all the non alphabetic chars into spaces. This is why you cant see the full-stops or these (){}[] brackets. It even removes newline \n"
 outstr: .fill 255, 1, 0
+
+// if (x < a || x > z) && (x < A || x > Z) && (!=\0) then replace
