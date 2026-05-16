@@ -1,7 +1,7 @@
     // this file contains the toupper function that will be called
-    .global toupper // allow other files to call this routine
+    .global _upper // allow other files to call this routine
 
-toupper:
+_upper:
     // X0 has address of input string
     // X1 has address of output string
     // function returns length of the string

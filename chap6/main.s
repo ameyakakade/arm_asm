@@ -4,12 +4,12 @@
 _start:
     // store add of input string in x0
     ADRP X0, instr@PAGE
-    ADD  X0, X0, instr@PAGEOFf
+    ADD  X0, X0, instr@PAGEOFF
     // store add of output string in x1
     ADRP X1, outstr@PAGE
-    ADD  X1, X1, outstr@PAGEOFf
+    ADD  X1, X1, outstr@PAGEOFF
 
-    BL toupper // this stores the next instruction in lr reg so we can return
+    BL _upper // this stores the next instruction in lr reg so we can return
 
     // printing the string
     MOV  X2, X0 // the function returns length of the string
