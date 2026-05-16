@@ -27,9 +27,9 @@ jump:
     ADRP X1,  outstr@PAGE
     ADD  X1,  X1, outstr@PAGEOFF
     SUB  X2,  X2, X1
+    SVC #0x80
 
     // exit
-    SVC #0x80
     MOV X16, #1
     MOV X0,  #0
     SVC #0x80

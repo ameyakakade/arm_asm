@@ -10,14 +10,11 @@ loop:
     // current char will be present in W0
     LDRB W0, [X1], #1 // loading char and increment x1
     CMP W0, 'A'
-
-    =========
-    B.LT jump
+    B.GE jump
     CMP W0, 'Z'
-    B.GT jump
-    ADD W0, W0, #('a'-'A')
-    =========
-    change these
+    B.LE jump
+    // if it satisfies all the conditions it is not a alphabetic char so replace it with spaces
+    MOV W0, #0x20
 
 jump:   
     STRB W0, [X2], #1 // storing the byte back into out string and incre x2
@@ -39,5 +36,5 @@ jump:
     SVC #0x80
     
     .data
-str: .asciz "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG\n"
+str: .asciz "$*#)()\n"
 outstr: .fill 255, 1, 0

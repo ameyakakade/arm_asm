@@ -4,7 +4,7 @@ else
 DEBUGFLAGS =
 endif
 
-all: ldrpc loadfrommem array uppercase lowercase
+all: ldrpc loadfrommem array uppercase lowercase nonalpha
 
 ldrpc: ldrpc.o
 	ld -o ldrpc ldrpc.o -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64 
@@ -35,3 +35,9 @@ lowercase: lowercase.o
 
 lowercase.o: lowercase.s
 	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o lowercase.o lowercase.s
+
+nonalpha: nonalpha.o
+	ld -o nonalpha nonalpha.o -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64 
+
+nonalpha.o: nonalpha.s
+	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o nonalpha.o nonalpha.s
