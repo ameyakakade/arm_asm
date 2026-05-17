@@ -1,25 +1,27 @@
+BUILD = build/
+
 ifdef DEBUG
 DEBUGFLAGS = -g
 else
 DEBUGFLAGS =
 endif
 
-all: uppercase uppercasec stackframec
+all: $(BUILD)uppercase $(BUILD)uppercasec $(BUILD)stackframec
 
-uppercasec: upper.o uppercasetest.c
-	clang -o uppercasec uppercasetest.c upper.o
+$(BUILD)uppercasec: $(BUILD)upper.o uppercasetest.c
+	clang -o $(BUILD)uppercasec uppercasetest.c $(BUILD)upper.o
 
-uppercase: main.o upper.o
-	ld -o uppercase main.o upper.o -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64 
+$(BUILD)uppercase: $(BUILD)main.o $(BUILD)upper.o
+	ld -o $(BUILD)uppercase main.o upper.o -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64 
 
-main.o: main.s
-	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o main.o main.s
+$(BUILD)main.o: main.s
+	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o $(BUILD)main.o main.s
 
-upper.o: upper.s
-	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o upper.o upper.s
+$(BUILD)upper.o: upper.s
+	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o $(BUILD)upper.o upper.s
 
-stackframec: stackframe.o printwordtest.c
-	clang -o stackframec printwordtest.c stackframe.o
+$(BUILD)stackframec: $(BUILD)stackframe.o printwordtest.c
+	clang -o $(BUILD)stackframec printwordtest.c $(BUILD)stackframe.o
 
-stackframe.o: stackframe.s
-	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o stackframe.o stackframe.s
+$(BUILD)stackframe.o: stackframe.s
+	as $(DEBUGFLAGS) -gdwarf-4 -arch arm64 -o $(BUILD)stackframe.o stackframe.s
