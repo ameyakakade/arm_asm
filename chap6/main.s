@@ -15,7 +15,7 @@ _start:
     MOV  X2, X0 // the function returns length of the string
     MOV  X0,  #1
     ADRP X1, outstr@PAGE
-    ADD  X1, X1, outstr@PAGEOFf
+    ADD  X1, X1, outstr@PAGEOFF
     MOV  X16, #0x4
     SVC #0x80
 
